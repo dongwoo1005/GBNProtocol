@@ -292,6 +292,7 @@ public class Sender {
         receiver.start();
 
         // Begin sending data on the main thread
+        System.out.println("seqNumCount: " + seqNumCount);
         for (int i=0; i<seqNumCount; i+=1) {
             System.out.println("i=" + i);
             reliableDataTransferSend(packets.get(i));
