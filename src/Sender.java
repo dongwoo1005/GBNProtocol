@@ -225,6 +225,8 @@ public class Sender {
 
             DatagramSocket getAckUdpSocket = null;
             try {
+                int j = 0;
+                int prev = base;
                 while (true) {
 
                     // Create a UDP socket on sender port to get Acks
@@ -242,8 +244,11 @@ public class Sender {
                     }
 
                     ackLogWriter.write(myPacket.getSeqNum() + "\n");    // write log
+                    // 31 -> 0
+                    if (prev > myPacket.getSeqNum()) j += 1;
+                    prev = base;
+                    base = j*32 + myPacket.getSeqNum() + 1;
 
-                    base = myPacket.getSeqNum() + 1;
                     System.out.println("increment base to : " + base);
                     if (nextSeqNum < base + N) {
                         synchronized (syncObject) {
@@ -290,7 +295,6 @@ public class Sender {
     }
 
     private static class SyncObject {
-
         public SyncObject() {
         }
     }

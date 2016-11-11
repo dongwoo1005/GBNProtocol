@@ -46,8 +46,8 @@
       <file leaf-file-name="Receiver.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Receiver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.222222">
-              <caret line="112" column="47" selection-start-line="112" selection-start-column="47" selection-end-line="112" selection-end-column="47" />
+            <state vertical-scroll-proportion="-9.851851">
+              <caret line="98" column="49" selection-start-line="98" selection-start-column="42" selection-end-line="98" selection-end-column="49" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -58,16 +58,16 @@
       <file leaf-file-name="Sender.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Sender.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.12656641">
-              <caret line="129" column="41" selection-start-line="129" selection-start-column="41" selection-end-line="129" selection-end-column="41" />
+            <state vertical-scroll-proportion="0.27694234">
+              <caret line="228" column="31" selection-start-line="228" selection-start-column="31" selection-end-line="228" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#5902#5903#0" expanded="true" />
                 <element signature="e#5961#5962#0" expanded="true" />
                 <element signature="e#6716#6717#0" expanded="true" />
                 <element signature="e#6778#6779#0" expanded="true" />
-                <element signature="e#9416#9417#0" expanded="true" />
-                <element signature="e#9462#9463#0" expanded="true" />
+                <element signature="e#9608#9609#0" expanded="true" />
+                <element signature="e#9654#9655#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -93,16 +93,6 @@
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -140,7 +130,7 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="width" value="1161" />
+    <option name="width" value="914" />
     <option name="height" value="900" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -712,15 +702,15 @@
       <created>1478759841602</created>
       <option name="number" value="Default" />
       <updated>1478759841602</updated>
-      <workItem from="1478759844359" duration="40107000" />
+      <workItem from="1478759844359" duration="42087000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="40107000" />
+    <option name="totallyTimeSpent" value="42087000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1161" height="900" extended-state="6" />
+    <frame x="0" y="0" width="914" height="900" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -839,7 +829,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.18181819">
           <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
           <folding />
         </state>
@@ -867,8 +857,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Receiver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.222222">
-          <caret line="112" column="47" selection-start-line="112" selection-start-column="47" selection-end-line="112" selection-end-column="47" />
+        <state vertical-scroll-proportion="-9.851851">
+          <caret line="98" column="49" selection-start-line="98" selection-start-column="42" selection-end-line="98" selection-end-column="49" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -877,16 +867,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Sender.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12656641">
-          <caret line="129" column="41" selection-start-line="129" selection-start-column="41" selection-end-line="129" selection-end-column="41" />
+        <state vertical-scroll-proportion="0.27694234">
+          <caret line="228" column="31" selection-start-line="228" selection-start-column="31" selection-end-line="228" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#5902#5903#0" expanded="true" />
             <element signature="e#5961#5962#0" expanded="true" />
             <element signature="e#6716#6717#0" expanded="true" />
             <element signature="e#6778#6779#0" expanded="true" />
-            <element signature="e#9416#9417#0" expanded="true" />
-            <element signature="e#9462#9463#0" expanded="true" />
+            <element signature="e#9608#9609#0" expanded="true" />
+            <element signature="e#9654#9655#0" expanded="true" />
           </folding>
         </state>
       </provider>
