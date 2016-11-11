@@ -55,12 +55,13 @@ public class Receiver {
 
         // Output
         File outputFile = new File(outputFileName);
-        if (!outputFile.exists()) outputFile.createNewFile();
+        if (outputFile.exists()) outputFile.delete();
+        outputFile.createNewFile();
         outputWriter = Files.newBufferedWriter(Paths.get(outputFileName), StandardOpenOption.WRITE);
 
         // Log
         File logFile = new File(LOG_FILE_NAME);
-        logFile.delete();
+        if (logFile.exists()) logFile.delete();
         logFile.createNewFile();
         logWriter = Files.newBufferedWriter(Paths.get(LOG_FILE_NAME), StandardOpenOption.WRITE);
     }

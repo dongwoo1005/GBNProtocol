@@ -69,13 +69,13 @@ public class Sender {
 
         // seq log writer
         File seqLogFile = new File(SEQ_LOG_FILE_NAME);
-        seqLogFile.delete();
+        if (seqLogFile.exists()) seqLogFile.delete();
         seqLogFile.createNewFile();
         seqLogWriter = Files.newBufferedWriter(Paths.get(SEQ_LOG_FILE_NAME), StandardOpenOption.WRITE);
 
         // ack log writer
         File ackLogFile = new File(ACK_LOG_FILE_NAME);
-        ackLogFile.delete();
+        if (ackLogFile.exists()) ackLogFile.delete();
         ackLogFile.createNewFile();
         ackLogWriter = Files.newBufferedWriter(Paths.get(ACK_LOG_FILE_NAME), StandardOpenOption.WRITE);
 
