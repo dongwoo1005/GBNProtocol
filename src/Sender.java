@@ -146,7 +146,7 @@ public class Sender {
             DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ipAddress, nEmulatorPortGetData);
             udpSocket.send(sendPacket);
 
-            seqLogWriter.write(packet.getSeqNum());
+            seqLogWriter.write(packet.getSeqNum() + "\n");
             System.out.println(packet.getSeqNum() + "write seq log");
         } catch (UnknownHostException e) {
             e.printStackTrace();
@@ -205,6 +205,7 @@ public class Sender {
         if (seqLogWriter != null) seqLogWriter.close();
         if (bufferedReader != null) bufferedReader.close();
         stopTimer();
+        System.exit(0);
     }
 
 
