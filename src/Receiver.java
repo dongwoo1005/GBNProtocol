@@ -1,7 +1,6 @@
 import java.io.*;
 import java.net.*;
 import java.nio.file.Files;
-import java.nio.file.OpenOption;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
@@ -44,6 +43,7 @@ public class Receiver {
                     Packet myPacket = Packet.parseUDPdata(receiveData);
 
                     // Log
+                    System.out.println("received: " + myPacket.getSeqNum());
                     logWriter.write(myPacket.getSeqNum() + "\n");
 
                     // Create a UDP socket
@@ -51,7 +51,7 @@ public class Receiver {
 
                     // Check the sequence number of the packet and update currentSendPacket
                     if (myPacket.getSeqNum() == expectedSeqNum) {
-
+                        System.out.println("Match");
                         if (myPacket.getType() != 2) outputWriter.write(new String(myPacket.getData()));
                         currentSendPacket = myPacket.getType() == 2 ?
                                 Packet.createEOT(expectedSeqNum) : Packet.createACK(expectedSeqNum);
@@ -64,11 +64,13 @@ public class Receiver {
                     InetAddress ipAddress = InetAddress.getByName(nEmulatorHostname);
                     DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ipAddress, nEmulatorPortGetAcks);
                     sendAckUdpSocket.send(sendPacket);
+                    System.out.println("sent: " + currentSendPacket.getSeqNum());
 
                     sendAckUdpSocket.close();
 
                     // exit if EOT
                     if (myPacket.getType() == 2) {
+                        System.out.println("EOT received");
                         if (getDataUdpSocket != null) getDataUdpSocket.close();
                         break;
                     }
