@@ -245,7 +245,7 @@ public class Sender {
 
                     ackLogWriter.write(myPacket.getSeqNum() + "\n");    // write log
                     // 31 -> 0
-                    if (prev > myPacket.getSeqNum() + j*32) j += 1;
+                    if (prev > myPacket.getSeqNum() + j*32 + 1) j += 1;
                     prev = base;
                     base = j*32 + myPacket.getSeqNum() + 1;
 
