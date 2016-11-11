@@ -239,6 +239,9 @@ public class Sender {
                     base = myPacket.getSeqNum() + 1;
                     if (base == nextSeqNum) {
                         System.out.println("Receive base == nextSeqNum");
+                        Packet eotPacket = Packet.createEOT(nextSeqNum);
+                        unreliableDataTransferSend(eotPacket, nEmulatorHostAddr, nEmulatorPortGetData);
+                        System.out.println("send eot");
                         stopTimer();
                     }
                     else {
