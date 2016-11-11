@@ -3,6 +3,7 @@ import java.net.*;
 import java.nio.file.Files;
 import java.nio.file.OpenOption;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 /**
  * GBN
@@ -118,15 +119,13 @@ public class Receiver {
         // Output
         File outputFile = new File(outputFileName);
         if (!outputFile.exists()) outputFile.createNewFile();
-        outputWriter = Files.newBufferedWriter(Paths.get(outputFileName), (OpenOption) null);
+        outputWriter = Files.newBufferedWriter(Paths.get(outputFileName), StandardOpenOption.WRITE);
 
         // Log
         File logFile = new File(LOG_FILE_NAME);
-        if (logFile.exists()) {
-            logFile.delete();
-            logFile.createNewFile();
-        }
-        logWriter = Files.newBufferedWriter(Paths.get(LOG_FILE_NAME), (OpenOption) null);
+        logFile.delete();
+        logFile.createNewFile();
+        logWriter = Files.newBufferedWriter(Paths.get(LOG_FILE_NAME), StandardOpenOption.WRITE);
 
         // Receiver
         DataReceiver dataReceiver = new DataReceiver();
