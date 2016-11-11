@@ -293,6 +293,7 @@ public class Sender {
 
         // Begin sending data on the main thread
         System.out.println("seqNumCount: " + seqNumCount);
+        System.out.println("packets size: " + packets.size());
         for (int i=0; i<seqNumCount; i+=1) {
             System.out.println("i=" + i);
             reliableDataTransferSend(packets.get(i));
