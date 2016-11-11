@@ -95,7 +95,7 @@ public class Sender {
             String data = String.valueOf(charArr);
             int emptyIndex = data.indexOf("\u0000");
             if (emptyIndex > 0) data = data.substring(0, emptyIndex);
-            System.out.println(seqNumCount + data);
+//            System.out.println(seqNumCount + data);
 
             Packet packet = Packet.createPacket(seqNumCount + 1, data);
             packets.add(packet);
@@ -105,21 +105,21 @@ public class Sender {
 
 
     private static void reliableDataTransferSend(Packet packet) throws Exception {
-        System.out.println("rdt_send");
+//        System.out.println("rdt_send");
         if (nextSeqNum < base + N) {
             sendData(packet);
         } else {
             refuseData(packet);   // hold and wait until base++
         }
-        System.out.println("finish rdt_send");
+//        System.out.println("finish rdt_send");
     }
 
 
     private static void sendData(Packet packet) throws Exception {
-        System.out.println("sendData");
+//        System.out.println("sendData");
         unreliableDataTransferSend(packet, nEmulatorHostAddr, nEmulatorPortGetData);
         if (base == nextSeqNum) {
-            System.out.print("base == nextSeqNum");
+//            System.out.print("base == nextSeqNum");
             startTimer();
         }
         nextSeqNum += 1;
@@ -127,7 +127,7 @@ public class Sender {
 
 
     private static void refuseData(Packet packet) throws Exception {
-        System.out.println("refuseData");
+//        System.out.println("refuseData");
         synchronized (syncObject) {
             syncObject.wait();
         }
@@ -137,7 +137,7 @@ public class Sender {
 
     private static void unreliableDataTransferSend(Packet packet, String nEmulatorHostAddr, int nEmulatorPortGetData) {
 
-        System.out.println(packet.getSeqNum() + "udt_send");
+//        System.out.println(packet.getSeqNum() + "udt_send");
         // Create a UDP socket
         DatagramSocket udpSocket = null;
         try {
@@ -150,7 +150,7 @@ public class Sender {
             udpSocket.send(sendPacket);
 
             seqLogWriter.write(packet.getSeqNum() + "\n");
-            System.out.println(packet.getSeqNum() + "write seq log");
+//            System.out.println(packet.getSeqNum() + "write seq log");
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (SocketException e) {
@@ -159,13 +159,13 @@ public class Sender {
             e.printStackTrace();
         } finally {
             if (udpSocket != null) udpSocket.close();
-            System.out.println(packet.getSeqNum() + "finish udt_send");
+//            System.out.println(packet.getSeqNum() + "finish udt_send");
         }
     }
 
 
     private static void startTimer() {
-        System.out.println("startTimer");
+//        System.out.println("startTimer");
         stopTimer();
         timer = new Timer();
         timer.schedule(new TimeoutTask(), TIMEOUT_DELAY);
@@ -173,9 +173,9 @@ public class Sender {
 
 
     private static void stopTimer() {
-        System.out.println("in stopTimer");
+//        System.out.println("in stopTimer");
         if (timer != null) {
-            System.out.println("stopped");
+//            System.out.println("stopped");
             timer.cancel();
             timer.purge();
             timer = null;
@@ -193,7 +193,7 @@ public class Sender {
 
         @Override
         public void run() {
-            System.out.println("timertask");
+//            System.out.println("timertask");
             startTimer();
             for (int i=base; i<nextSeqNum; i+=1) {
                 unreliableDataTransferSend(packets.get(i-1), nEmulatorHostAddr, nEmulatorPortGetData);
@@ -203,7 +203,7 @@ public class Sender {
 
 
     private static void closeAll() throws IOException {
-        System.out.println("closeAll");
+//        System.out.println("closeAll");
         if (ackLogWriter != null) ackLogWriter.close();
         if (seqLogWriter != null) seqLogWriter.close();
         if (bufferedReader != null) bufferedReader.close();
@@ -239,7 +239,7 @@ public class Sender {
                     Packet myPacket = Packet.parseUDPdata(receiveData);
 
                     if (myPacket.getType() == 2) {
-                        System.out.println("received EOT");
+//                        System.out.println("received EOT");
                         break;
                     }
 
@@ -249,7 +249,7 @@ public class Sender {
                     prev = base;
                     base = j*32 + myPacket.getSeqNum() + 1;
 
-                    System.out.println("increment base to : " + base);
+//                    System.out.println("increment base to : " + base);
                     if (nextSeqNum < base + N) {
                         synchronized (syncObject) {
                             syncObject.notify();
@@ -257,27 +257,27 @@ public class Sender {
                     }
 
                     if (base == nextSeqNum) {
-                        System.out.println("Receive base == nextSeqNum");
+//                        System.out.println("Receive base == nextSeqNum");
                         Packet eotPacket = Packet.createEOT(nextSeqNum);
                         unreliableDataTransferSend(eotPacket, nEmulatorHostAddr, nEmulatorPortGetData);
-                        System.out.println("send eot");
+//                        System.out.println("send eot");
                         stopTimer();
                     }
                     else {
-                        System.out.println("receive run else");
+//                        System.out.println("receive run else");
                         startTimer();
                     }
                     getAckUdpSocket.close();
                 }
 
             } catch (SocketException e) {
-                System.out.println("Receive Task Socket Exception");
+//                System.out.println("Receive Task Socket Exception");
                 e.printStackTrace();
             } catch (IOException e) {
-                System.out.println("Receive Task IO Exception");
+//                System.out.println("Receive Task IO Exception");
                 e.printStackTrace();
             } catch (Exception e) {
-                System.out.println("Receive Task Exception Exception");
+//                System.out.println("Receive Task Exception Exception");
                 e.printStackTrace();
             } finally {
                 if (getAckUdpSocket != null) getAckUdpSocket.close();
@@ -312,13 +312,13 @@ public class Sender {
         receiver.start();
 
         // Begin sending data on the main thread
-        System.out.println("seqNumCount: " + seqNumCount);
-        System.out.println("packets size: " + packets.size());
+//        System.out.println("seqNumCount: " + seqNumCount);
+//        System.out.println("packets size: " + packets.size());
         for (int i=0; i<seqNumCount; i+=1) {
-            System.out.println("i=" + i);
+//            System.out.println("i=" + i);
             reliableDataTransferSend(packets.get(i));
-            System.out.println("i=" + i);
+//            System.out.println("i=" + i);
         }
-        System.out.println("done");
+//        System.out.println("done");
     }
 }
