@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.net.SocketException;
 
-public class sender {
+public class Sender2 {
     private final static String WRONG_ARG_NUM = "WARNNING: Not correct number of arguments. Please check README.txt";
     private final static String WARN_NOT_VALID = "WARNNING: Not vaild arguments! Check README.txt for instruction.";
     // used to store the emulator's address and port number. Initilized
@@ -303,7 +303,7 @@ public class sender {
 class Task implements Callable<String> {
     @Override
     public String call() throws Exception {
-        sender.receiveTask();
+        Sender2.receiveTask();
         return "NotGonnaWakeUp!";
     }
 }
