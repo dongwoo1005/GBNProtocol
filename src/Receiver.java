@@ -26,16 +26,56 @@ public class Receiver {
     static BufferedWriter outputWriter = null;
     static BufferedWriter logWriter = null;
 
+
+    private static void checkArguments(String[] args) {
+        // Error and exit appropriately
+        if (args.length != 4) {
+            System.err.println(
+                    "Required command line parameters:"
+                            + " <hostname for the nEmulator>"
+                            + " <UDP port number used by the emulator to receive ACKs from the Receiver>"
+                            + " <UDP port number used by the Receiver to receive data from the emulator>"
+                            + " <name of the file into which the received data is written>"
+            );
+            System.exit(1);
+        }
+    }
+
+
+    private static void initialize(String[] args) throws Exception {
+        // Read command line arguments
+        nEmulatorHostname = args[0];
+        nEmulatorPortGetAcks = Integer.valueOf(args[1]);
+        receiverPortGetData = Integer.valueOf(args[2]);
+        outputFileName = args[3];
+
+        // default variables
+        expectedSeqNum = 1;
+        currentSendPacket = Packet.createACK(expectedSeqNum);
+
+        // Output
+        File outputFile = new File(outputFileName);
+        if (!outputFile.exists()) outputFile.createNewFile();
+        outputWriter = Files.newBufferedWriter(Paths.get(outputFileName), StandardOpenOption.WRITE);
+
+        // Log
+        File logFile = new File(LOG_FILE_NAME);
+        logFile.delete();
+        logFile.createNewFile();
+        logWriter = Files.newBufferedWriter(Paths.get(LOG_FILE_NAME), StandardOpenOption.WRITE);
+    }
+
+
     static class DataReceiver {
 
         public void run() throws IOException {
 
+            DatagramSocket getDataUdpSocket = null;
+
             try {
+                // Create a UDP socket on receiver port to get data
+                getDataUdpSocket = new DatagramSocket(receiverPortGetData);
                 while(true) {
-
-                    // Create a UDP socket on receiver port to get data
-                    DatagramSocket getDataUdpSocket = new DatagramSocket(receiverPortGetData);
-
                     // ReliableDataTransfer Receive Packet - extract
                     byte[] receiveData = new byte[PACKET_SIZE];
                     DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
@@ -71,7 +111,6 @@ public class Receiver {
                     // exit if EOT
                     if (myPacket.getType() == 2) {
                         System.out.println("EOT received");
-                        if (getDataUdpSocket != null) getDataUdpSocket.close();
                         break;
                     }
                 }
@@ -84,6 +123,7 @@ public class Receiver {
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
+                if (getDataUdpSocket != null) getDataUdpSocket.close();
                 closeAll();
             }
         }
@@ -96,38 +136,8 @@ public class Receiver {
 
     public static void main(String[] args) throws Exception {
 
-        // Error and exit appropriately
-        if (args.length != 4) {
-            System.err.println(
-                    "Required command line parameters:"
-                            + " <hostname for the nEmulator>"
-                            + " <UDP port number used by the emulator to receive ACKs from the Receiver>"
-                            + " <UDP port number used by the Receiver to receive data from the emulator>"
-                            + " <name of the file into which the received data is written>"
-            );
-            System.exit(1);
-        }
-
-        // Read command line arguments
-        nEmulatorHostname = args[0];
-        nEmulatorPortGetAcks = Integer.valueOf(args[1]);
-        receiverPortGetData = Integer.valueOf(args[2]);
-        outputFileName = args[3];
-
-        // default variables
-        expectedSeqNum = 1;
-        currentSendPacket = Packet.createACK(expectedSeqNum);
-
-        // Output
-        File outputFile = new File(outputFileName);
-        if (!outputFile.exists()) outputFile.createNewFile();
-        outputWriter = Files.newBufferedWriter(Paths.get(outputFileName), StandardOpenOption.WRITE);
-
-        // Log
-        File logFile = new File(LOG_FILE_NAME);
-        logFile.delete();
-        logFile.createNewFile();
-        logWriter = Files.newBufferedWriter(Paths.get(LOG_FILE_NAME), StandardOpenOption.WRITE);
+        checkArguments(args);
+        initialize(args);
 
         // Receiver
         DataReceiver dataReceiver = new DataReceiver();
