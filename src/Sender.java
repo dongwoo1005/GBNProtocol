@@ -91,7 +91,7 @@ public class Sender {
             String data = String.valueOf(charArr);
             int emptyIndex = data.indexOf("\u0000");
             if (emptyIndex > 0) data = data.substring(0, emptyIndex);
-            System.out.println(data);
+            System.out.println(seqNumCount + data);
 
             Packet packet = Packet.createPacket(seqNumCount + 1, data);
             packets.add(packet);
