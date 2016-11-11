@@ -125,8 +125,11 @@ public class Sender {
 
     private static void refuseData(Packet packet) throws Exception {
         System.out.println("refuseData");
-        while(nextSeqNum >= base + N) {
-//            System.out.println("wait");
+        while(true) {
+            if (nextSeqNum < base + N) {
+                System.out.println("break loop");
+                break;
+            }
         }
         sendData(packet);
     }
@@ -241,6 +244,7 @@ public class Sender {
                     ackLogWriter.write(myPacket.getSeqNum() + "\n");    // write log
 
                     base = myPacket.getSeqNum() + 1;
+                    System.out.println("increment base to : " + base);
                     if (base == nextSeqNum) {
                         System.out.println("Receive base == nextSeqNum");
                         Packet eotPacket = Packet.createEOT(nextSeqNum);
