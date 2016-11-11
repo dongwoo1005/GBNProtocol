@@ -110,7 +110,7 @@ public class Receiver {
 
                     // exit if EOT
                     if (myPacket.getType() == 2) {
-                        System.out.println("EOT received");
+                        System.out.println("EOT");
                         break;
                     }
                 }

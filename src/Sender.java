@@ -232,7 +232,10 @@ public class Sender {
                     getAckUdpSocket.receive(receivePacket);            // wait until received
                     Packet myPacket = Packet.parseUDPdata(receiveData);
 
-                    if (myPacket.getType() == 2) break;
+                    if (myPacket.getType() == 2) {
+                        System.out.println("received EOT");
+                        break;
+                    }
 
                     ackLogWriter.write(myPacket.getSeqNum() + "\n");    // write log
 
