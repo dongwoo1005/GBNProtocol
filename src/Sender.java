@@ -91,6 +91,7 @@ public class Sender {
             String data = String.valueOf(charArr);
             int emptyIndex = data.indexOf("\u0000");
             if (emptyIndex > 0) data = data.substring(0, emptyIndex);
+            System.out.println(data);
 
             Packet packet = Packet.createPacket(seqNumCount + 1, data);
             packets.add(packet);
@@ -236,7 +237,10 @@ public class Sender {
                     ackLogWriter.write(myPacket.getSeqNum() + "\n");    // write log
 
                     base = myPacket.getSeqNum() + 1;
-                    if (base == nextSeqNum) stopTimer();
+                    if (base == nextSeqNum) {
+                        System.out.println("Receive base == nextSeqNum");
+                        stopTimer();
+                    }
                     else {
                         System.out.println("receive run else");
                         startTimer();
