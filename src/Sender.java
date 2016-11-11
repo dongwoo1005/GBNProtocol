@@ -37,6 +37,8 @@ public class Sender {
     static BufferedWriter seqLogWriter = null;
     static BufferedWriter ackLogWriter = null;
 
+    static SyncObject syncObject = null;
+
 
     private static void checkArguments(String[] args) {
         // check number of arguments
@@ -76,6 +78,8 @@ public class Sender {
         ackLogFile.delete();
         ackLogFile.createNewFile();
         ackLogWriter = Files.newBufferedWriter(Paths.get(ACK_LOG_FILE_NAME), StandardOpenOption.WRITE);
+
+        syncObject = new SyncObject();
     }
 
 
@@ -108,7 +112,6 @@ public class Sender {
             refuseData(packet);   // hold and wait until base++
         }
         System.out.println("finish rdt_send");
-        return;
     }
 
 
@@ -125,11 +128,8 @@ public class Sender {
 
     private static void refuseData(Packet packet) throws Exception {
         System.out.println("refuseData");
-        while(true) {
-            if (nextSeqNum < base + N) {
-                System.out.println("break loop");
-                break;
-            }
+        synchronized (syncObject) {
+            syncObject.wait();
         }
         sendData(packet);
     }
@@ -245,6 +245,12 @@ public class Sender {
 
                     base = myPacket.getSeqNum() + 1;
                     System.out.println("increment base to : " + base);
+                    if (nextSeqNum < base + N) {
+                        synchronized (syncObject) {
+                            syncObject.notify();
+                        }
+                    }
+
                     if (base == nextSeqNum) {
                         System.out.println("Receive base == nextSeqNum");
                         Packet eotPacket = Packet.createEOT(nextSeqNum);
@@ -280,6 +286,12 @@ public class Sender {
 
         public void start() {
             receiverThread.start();
+        }
+    }
+
+    private static class SyncObject {
+
+        public SyncObject() {
         }
     }
 
