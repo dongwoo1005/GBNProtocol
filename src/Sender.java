@@ -17,7 +17,7 @@ import java.util.TimerTask;
 public class Sender {
 
     static final int N = 10;
-    static final int MAXLEN = 50;
+    static final int MAXLEN = 500;
     static final int PACKET_SIZE = 512;
     static final int TIMEOUT_DELAY = 50;
     static final String SEQ_LOG_FILE_NAME = "seqnum.log";
